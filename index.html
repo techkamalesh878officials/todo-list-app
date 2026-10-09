@@ -1,42 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>To-Do List</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A modern to-do list app with local storage">
+    <meta name="theme-color" content="#2563eb">
+    <title>To-Do List - Organize Your Tasks</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>✓</text></svg>">
+</head>
+<body>
     <div class="app">
-      <h1>To-Do List</h1>
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1>📋 My Tasks</h1>
+                <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode (Ctrl+D)">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </header>
 
-      <form id="todo-form" class="todo-form">
-        <input
-          id="todo-input"
-          type="text"
-          placeholder="Add a new task..."
-          maxlength="120"
-          aria-label="New task"
-        />
-        <button type="submit">Add</button>
-      </form>
+        <!-- Input Section -->
+        <section class="input-section">
+            <form id="todo-form" class="todo-form">
+                <input
+                    id="todo-input"
+                    type="text"
+                    placeholder="What needs to be done?"
+                    maxlength="200"
+                    aria-label="Add a new task"
+                    autocomplete="off"
+                />
+                <button type="submit" class="add-btn" aria-label="Add task">
+                    <span class="add-icon">+</span>
+                    <span class="add-text">Add</span>
+                </button>
+            </form>
+            <div class="keyboard-hint">💡 Press Enter to add • Ctrl+D for dark mode • ? for help</div>
+        </section>
 
-      <div class="toolbar">
-        <div id="task-count" class="task-count">0 tasks</div>
-        <div class="filters" aria-label="Filter tasks">
-          <button class="filter-btn active" data-filter="all" type="button">All</button>
-          <button class="filter-btn" data-filter="active" type="button">Active</button>
-          <button class="filter-btn" data-filter="completed" type="button">Completed</button>
+        <!-- Stats & Filters -->
+        <section class="controls-section">
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">Total:</span>
+                    <span id="total-count" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Pending:</span>
+                    <span id="pending-count" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Completed:</span>
+                    <span id="completed-count" class="stat-value">0</span>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <button class="filter-btn active" data-filter="all" type="button">All</button>
+                <button class="filter-btn" data-filter="active" type="button">Pending</button>
+                <button class="filter-btn" data-filter="completed" type="button">Done</button>
+            </div>
+        </section>
+
+        <!-- Task List -->
+        <section class="list-section">
+            <ul id="todo-list" class="todo-list" aria-live="polite" role="list"></ul>
+        </section>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="empty-state hidden">
+            <div class="empty-icon">📝</div>
+            <p class="empty-text">No tasks here yet. Add one to get started!</p>
         </div>
-      </div>
 
-      <ul id="todo-list" class="todo-list" aria-live="polite"></ul>
-
-      <button id="clear-completed" class="clear-btn" type="button">
-        Clear completed
-      </button>
+        <!-- Actions -->
+        <footer class="app-footer">
+            <button id="clear-completed" class="action-btn danger" type="button" aria-label="Clear all completed tasks">
+                🗑️ Clear Completed
+            </button>
+            <button id="export-btn" class="action-btn" type="button" aria-label="Export tasks">
+                💾 Export
+            </button>
+            <button id="reset-btn" class="action-btn danger" type="button" aria-label="Reset all tasks">
+                ⚠️ Reset All
+            </button>
+        </footer>
     </div>
 
+    <!-- Help Modal -->
+    <div id="help-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Keyboard Shortcuts</h2>
+                <button id="close-modal" class="close-btn" type="button" aria-label="Close help">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="shortcut">
+                    <kbd>Enter</kbd> <span>Add a new task</span>
+                </div>
+                <div class="shortcut">
+                    <kbd>Ctrl + D</kbd> <span>Toggle dark mode</span>
+                </div>
+                <div class="shortcut">
+                    <kbd>Ctrl + Shift + E</kbd> <span>Export tasks</span>
+                </div>
+                <div class="shortcut">
+                    <kbd>Ctrl + K</kbd> <span>Clear completed</span>
+                </div>
+                <div class="shortcut">
+                    <kbd>?</kbd> <span>Show this help</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
     <script src="script.js"></script>
-  </body>
+</body>
 </html>
